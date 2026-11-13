@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, Scale, TrendingDown } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Scale, Sparkles, TrendingDown } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import ProgressChart from '../components/ProgressChart'
@@ -42,7 +42,7 @@ export default function ParticipantPage() {
           <div className="profile-title"><span className={`avatar avatar-${person.id}`}>{person.name.slice(0, 1)}</span><h1>{person.name}</h1></div>
           <p>A evolução semana a semana, no seu ritmo.</p>
         </div>
-        <div className="profile-mark" aria-hidden="true">✳</div>
+        <Sparkles className="profile-mark" aria-hidden="true" />
       </section>
       {!isSupabaseConfigured && <DatabaseNotice />}
       {error && <ErrorMessage message={error} />}

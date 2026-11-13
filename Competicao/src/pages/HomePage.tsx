@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowRight, CalendarDays, Trophy } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, CalendarDays, Sparkles, Trophy } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import ProgressChart from '../components/ProgressChart'
@@ -57,8 +57,8 @@ export default function HomePage() {
           <div className="art-orbit orbit-one" />
           <div className="art-orbit orbit-two" />
           <div className="art-center"><img src="/logo.svg" alt="" /></div>
-          <span className="art-star star-one">✳</span>
-          <span className="art-star star-two">✳</span>
+          <Sparkles className="art-star star-one" />
+          <Sparkles className="art-star star-two" />
           <span className="art-label">JUNTOS<br />NESSA</span>
         </div>
       </section>
