@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, LogOut, Plus, Shield, Trash2 } from 'lucide-react'
+import { ArrowLeft, Check, Eye, EyeOff, LogOut, Plus, Shield, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import { DatabaseNotice, ErrorMessage, Loading } from '../components/Status'
@@ -10,6 +10,7 @@ const EMPTY_WEIGHTS = { ana: '', luis: '', sabrina: '' }
 export default function AdminPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [sessionEmail, setSessionEmail] = useState<string | null>(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [records, setRecords] = useState<WeekRecord[]>([])
@@ -161,7 +162,18 @@ export default function AdminPage() {
           <label className="form-label" htmlFor="admin-email">E-mail</label>
           <input className="text-input" id="admin-email" type="email" autoComplete="username" required value={email} onChange={(event) => setEmail(event.target.value)} />
           <label className="form-label" htmlFor="admin-password">Senha</label>
-          <input className="text-input" id="admin-password" type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
+          <div className="password-input-wrap">
+            <input className="text-input" id="admin-password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
+            <button
+              className="password-visibility-button"
+              type="button"
+              aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+              aria-pressed={showPassword}
+              onClick={() => setShowPassword((visible) => !visible)}
+            >
+              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+            </button>
+          </div>
           <button className="primary-button" type="submit">Entrar <ArrowLeft size={16} className="login-arrow" /></button>
           <span className="login-footnote"><Shield size={14} /> Acesso protegido pelas permissões do banco de dados.</span>
         </form>
