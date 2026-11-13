@@ -61,9 +61,11 @@ Abra no navegador o endereço local mostrado no terminal. Em `/admin`, entre com
 
 1. Envie o projeto para um repositório Git e importe esse repositório no [Vercel](https://vercel.com/).
 2. No Vercel, abra **Project → Settings → Environment Variables** e adicione:
-   - `VITE_SUPABASE_URL`: a Project URL do Supabase.
-   - `VITE_SUPABASE_ANON_KEY`: a chave pública anon/publishable.
-3. Salve as variáveis e faça um novo deploy.
+   - A URL do projeto (`SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL` ou `VITE_SUPABASE_URL`).
+   - A chave pública anon/publishable (`SUPABASE_ANON_KEY`, `SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` ou `VITE_SUPABASE_ANON_KEY`).
+   
+   O app reconhece esses nomes automaticamente. Não use `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY` nem credenciais `POSTGRES_*` no navegador.
+3. Salve as variáveis e faça um novo deploy para que o Vite as inclua no build.
 
 O Vercel detecta automaticamente o Vite. O comando de build é `npm run build` e a pasta publicada é `dist`. O arquivo [`vercel.json`](./vercel.json) configura as rotas diretas e atualizações de página.
 
