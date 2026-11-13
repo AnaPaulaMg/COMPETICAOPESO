@@ -2,6 +2,7 @@ import { ArrowLeft, Check, Eye, EyeOff, LogOut, Plus, Shield, Trash2 } from 'luc
 import { Link } from 'react-router-dom'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import { DatabaseNotice, ErrorMessage, Loading } from '../components/Status'
+import { ADMIN_LAST_ACTIVITY_KEY } from '../lib/adminSession'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 import { formatDate, type WeekRecord } from '../types'
 
@@ -60,6 +61,7 @@ export default function AdminPage() {
     })
     const { data: listener } = client.auth.onAuthStateChange((event) => {
       if (active && event === 'SIGNED_OUT') {
+        window.localStorage.removeItem(ADMIN_LAST_ACTIVITY_KEY)
         setSessionEmail(null)
         setIsAdmin(false)
       }
@@ -89,6 +91,7 @@ export default function AdminPage() {
       setError('Esta conta não está autorizada a registrar pesos.')
       await supabase.auth.signOut()
     } else {
+      window.localStorage.setItem(ADMIN_LAST_ACTIVITY_KEY, String(Date.now()))
       setSessionEmail(data.user.email ?? email)
       setIsAdmin(true)
       await refreshRecords()
@@ -140,6 +143,7 @@ export default function AdminPage() {
     if (!supabase) return
     const { error: logoutError } = await supabase.auth.signOut()
     if (logoutError) setError(`Não foi possível sair: ${logoutError.message}`)
+    window.localStorage.removeItem(ADMIN_LAST_ACTIVITY_KEY)
     setSessionEmail(null)
     setIsAdmin(false)
   }
