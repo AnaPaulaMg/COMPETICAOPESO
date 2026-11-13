@@ -339,3 +339,190 @@ button { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+:root {
+  color: #eef2ee;
+  background: #080a0b;
+  --ink: #eef2ee;
+  --muted: #9aa59e;
+  --line: #252c29;
+  --paper: #111513;
+  --green: #c8f169;
+  --dark: #080c0a;
+}
+
+body {
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 10% 12%, #17221a 0, transparent 33rem),
+    radial-gradient(ellipse at 94% 52%, #111a17 0, transparent 30rem),
+    #080a0b;
+}
+
+body::before {
+  position: fixed;
+  z-index: 0;
+  inset: -25%;
+  background:
+    radial-gradient(ellipse at 25% 35%, #91b85d12, transparent 34%),
+    radial-gradient(ellipse at 75% 65%, #508c7410, transparent 32%);
+  content: '';
+  pointer-events: none;
+  animation: ambient-drift 28s ease-in-out infinite alternate;
+}
+
+.app-shell { position: relative; z-index: 1; }
+.topbar, .site-footer { border-color: var(--line); }
+.brand small, .desktop-nav a, .admin-link, .site-footer, .back-link { color: #89958d; }
+.desktop-nav a:hover, .desktop-nav a.active, .admin-link:hover, .back-link:hover { color: var(--green); }
+.hero { background: linear-gradient(120deg, #121a16, #090d0b 72%); border: 1px solid #29342d; box-shadow: 0 24px 80px #0005; }
+.hero-art { animation: hero-drift 8s ease-in-out infinite; }
+.orbit-one { animation: orbit 32s linear infinite; }
+.orbit-two { animation: orbit 24s linear infinite reverse; }
+.art-center { animation: center-float 5s ease-in-out infinite; }
+.art-star { animation: star-pulse 2.8s ease-in-out infinite; }
+.star-two { animation-delay: .8s; }
+.hero h1 span, .bmi-page-hero h1 span { color: var(--green); }
+.section-kicker, .chart-legend span, .supporting-note, .ranking-name small, .person-card-copy small,
+.ranking-weight small, .loss-value small, .stat-label, .stat-foot, .form-hint,
+.bmi-page-hero p, .bmi-placeholder p, .bmi-disclaimer { color: #929e96; }
+.section-heading h2, .login-panel h2, .bmi-form-panel .section-heading h2 { color: #edf2ed; }
+.week-count, .leaderboard, .panel, .person-link-card, .profile-hero, .login-panel,
+.add-week-panel, .saved-weeks, .history-table, .empty-history {
+  border-color: var(--line);
+  background: linear-gradient(145deg, #131816, #0e1210);
+  color: var(--ink);
+  box-shadow: 0 14px 36px #0002;
+}
+.ranking-card { border-color: #222a25; }
+.ranking-card:hover, .ranking-card.is-winner { background: #19221a; }
+.ranking-name strong, .person-card-copy strong, .ranking-weight, .stat-card > strong,
+.history-row strong, .bmi-number { color: #eef2ee; }
+.rank-number, .ranking-arrow, .person-link-card > svg { color: #78857d; }
+.loss-value { color: #a7b2aa; }
+.loss-value.loss-positive, .table-loss { color: #b7dc70; }
+.chart-grid { stroke: #2b332e; }
+.chart-axis { fill: #89968d; }
+.chart-unit { fill: #77847c; }
+.chart-panel { background: #101412; }
+.chart-panel circle { stroke: #101412; }
+.chart-legend span { color: #b2bdb5; }
+.person-link-card:hover { border-color: #627744; box-shadow: 0 12px 30px #0004; }
+.bmi-banner { border-color: #3a4b2d; background: linear-gradient(110deg, #172016, #111713); }
+.bmi-banner strong { color: #e8f0df; }
+.bmi-banner small { color: #a1ad9a; }
+.bmi-banner-icon { background: #27351f; color: var(--green); }
+.profile-mark { color: #273326; }
+.history-row { border-color: #252c29; color: #abb6ae; }
+.history-header { background: #171d19; color: #8d9991; }
+.stat-icon { color: #a6c1d5; background: #1b2930; }
+.stat-icon-green, .bmi-large-icon { color: var(--green); background: #25311d; }
+.bmi-page-hero h1 { color: #f0f3f0; }
+.form-label { color: #bdc8c0; }
+.person-select { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.person-select button {
+  border-color: #303833;
+  background: #151a17;
+  color: #b7c1ba;
+  transition: transform .2s, border-color .2s, background .2s, color .2s;
+}
+.person-select button:hover { transform: translateY(-2px); border-color: #758b50; }
+.person-select button.selected { border-color: #88a752; background: #222d1c; color: #e2f2c5; }
+.guest-avatar { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: #29332d; color: var(--green); font-size: 15px; }
+.weight-source { border-color: #2a322d; background: #171c19; }
+.source-check { background: #29351f; color: var(--green); }
+.weight-source small { color: #8f9b93; }
+.weight-source a { color: #c8e68e; }
+.input-with-icon, .text-input, .weight-field input {
+  border-color: #343d37;
+  background: #0c100e;
+  color: #edf2ed;
+}
+.input-with-icon input, .text-input, .weight-field input { color: #edf2ed; }
+.input-with-icon > span, .input-with-icon > svg { color: #94a198; }
+.input-with-icon:focus-within, .text-input:focus, .weight-field input:focus {
+  border-color: #8da95b;
+  box-shadow: 0 0 0 3px #a4c56520;
+}
+.bmi-placeholder-icon { background: #202a1d; color: var(--green); }
+.bmi-tag-good { background: #26331e; color: #c7e991; }
+.bmi-tag-neutral { background: #332c1c; color: #e3c978; }
+.bmi-tag-caution { background: #34251e; color: #e4a77b; }
+.bmi-meter { background: linear-gradient(90deg, #475b36 0%, #a5ca65 21%, #a5ca65 62%, #b99c52 63%, #a36a50 100%); }
+.bmi-meter > span { border-color: #151a17; background: #f2f6ec; }
+.meter-labels { color: #8b978e; }
+.weight-goal { background: #1a2118; }
+.weight-goal strong { color: #c7e991; }
+.weight-goal span { color: #abb6aa; }
+.status-card { border-color: #35413b; background: #151d19; color: #bcc9c0; }
+.status-error { border-color: #5a332d; background: #241714; color: #f0a99b; }
+.status-warning { border-color: #594c2c; background: #211d12; color: #e4ce8d; }
+.status-success { border-color: #3e522e; background: #192116; color: #c3df99; }
+.admin-lock { border-color: #39462d; background: #222d1a; color: var(--green); }
+.primary-button { background: var(--green); color: #11170d; }
+.danger-button { color: #e5a89b; }
+.danger-button:hover { background: #321f1b; }
+.topbar, .section-block, .chart-section, .people-section, .history-section, .bmi-banner, .profile-hero,
+.stats-grid, .admin-heading, .bmi-page-hero, .bmi-layout {
+  animation: reveal-up .65s cubic-bezier(.2, .7, .2, 1) both;
+}
+.section-block:nth-of-type(2), .chart-section { animation-delay: .08s; }
+.people-section { animation-delay: .15s; }
+.ranking-card { animation: soft-appear .7s ease both; }
+.ranking-card:nth-child(2) { animation-delay: .08s; }
+.ranking-card:nth-child(3) { animation-delay: .16s; }
+.ranking-card:nth-child(4) { animation-delay: .24s; }
+.ranking-card, .stat-card, .person-link-card, .panel { transition: transform .25s, border-color .25s, background .25s, box-shadow .25s; }
+.ranking-card:hover, .stat-card:hover { transform: translateY(-2px); }
+.panel:hover { border-color: #343d37; }
+.bmi-large-icon, .stat-icon, .bmi-placeholder-icon, .admin-lock, .bmi-banner-icon {
+  animation: icon-float 5s ease-in-out infinite;
+}
+.stat-icon:nth-child(2), .bmi-banner-icon { animation-delay: .7s; }
+.bmi-placeholder-icon, .admin-lock { animation-delay: 1.3s; }
+.mobile-nav { border-color: #29312c; background: #0d110fee; backdrop-filter: blur(16px); }
+.mobile-nav a { color: #8d9991; }
+.mobile-nav a.active { color: var(--green); }
+
+@keyframes ambient-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to { transform: translate3d(2%, 1%, 0) scale(1.06); }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes soft-appear {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+@keyframes hero-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes icon-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+@keyframes orbit { to { rotate: 360deg; } }
+@keyframes center-float {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-7px) rotate(0); }
+}
+@keyframes star-pulse {
+  0%, 100% { opacity: .65; scale: .88; }
+  50% { opacity: 1; scale: 1.12; }
+}
+
+@media (max-width: 760px) {
+  .person-select { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

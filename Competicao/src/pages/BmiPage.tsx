@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { DatabaseNotice, ErrorMessage, Loading } from '../components/Status'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
-import { PEOPLE, type WeekRecord } from '../types'
+import { PEOPLE, type Person, type WeekRecord } from '../types'
 
 export default function BmiPage() {
-  const [selectedId, setSelectedId] = useState(PEOPLE[0].id)
+  const [selectedId, setSelectedId] = useState<Person['id'] | 'guest'>(PEOPLE[0].id)
   const [height, setHeight] = useState('')
+  const [guestWeight, setGuestWeight] = useState('')
   const [records, setRecords] = useState<WeekRecord[]>([])
   const [loading, setLoading] = useState(isSupabaseConfigured)
   const [error, setError] = useState('')
@@ -25,16 +26,20 @@ export default function BmiPage() {
       })
   }, [])
 
-  const participant = PEOPLE.find((person) => person.id === selectedId)!
-  const currentWeight = records[records.length - 1]?.[selectedId] ?? null
+  const participant = selectedId === 'guest'
+    ? null
+    : PEOPLE.find((person) => person.id === selectedId) ?? null
+  const currentWeight = selectedId === 'guest'
+    ? Number(guestWeight.replace(',', '.')) || null
+    : records[records.length - 1]?.[selectedId] ?? null
   const heightInMeters = Number(height.replace(',', '.')) / 100
   const bmi = useMemo(() => {
     if (!currentWeight || !heightInMeters || heightInMeters < 0.8 || heightInMeters > 2.5) return null
     return currentWeight / (heightInMeters * heightInMeters)
   }, [currentWeight, heightInMeters])
   const healthyWeight = heightInMeters ? 24.9 * heightInMeters * heightInMeters : null
-  const weightToLose = bmi !== null && healthyWeight !== null && bmi > 24.9
-    ? currentWeight! - healthyWeight
+  const weightToLose = bmi !== null && currentWeight !== null && healthyWeight !== null && bmi > 24.9
+    ? currentWeight - healthyWeight
     : 0
 
   return (
@@ -44,7 +49,7 @@ export default function BmiPage() {
         <span className="bmi-large-icon"><HeartPulse size={25} /></span>
         <span className="section-kicker">UMA REFERÊNCIA PARA VOCÊ</span>
         <h1>Seu corpo, <span>seus números.</span></h1>
-        <p>Confira seu IMC e veja a distância até a faixa considerada saudável, usando o peso mais recente da competição.</p>
+        <p>Confira seu IMC usando o peso mais recente da competição ou informe seu próprio peso se estiver de fora.</p>
       </section>
       {!isSupabaseConfigured && <DatabaseNotice />}
       {error && <ErrorMessage message={error} />}
@@ -64,17 +69,49 @@ export default function BmiPage() {
                     key={person.id}
                     type="button"
                     onClick={() => setSelectedId(person.id)}
+                    aria-pressed={selectedId === person.id}
                   >
                     <span className={`avatar avatar-${person.id}`}>{person.name.slice(0, 1)}</span>
                     {person.name}
                   </button>
                 ))}
+                <button
+                  className={selectedId === 'guest' ? 'selected' : ''}
+                  type="button"
+                  onClick={() => setSelectedId('guest')}
+                  aria-pressed={selectedId === 'guest'}
+                >
+                  <span className="guest-avatar">+</span>
+                  Pessoa de fora
+                </button>
               </div>
-              <div className="weight-source">
-                <span className="source-check"><Check size={14} /></span>
-                <span><small>PESO MAIS RECENTE</small><strong>{currentWeight === null ? 'Ainda não registrado' : `${currentWeight.toFixed(1)} kg`}</strong></span>
-                {currentWeight !== null && <Link to={`/participante/${participant.id}`}>Ver dados</Link>}
-              </div>
+              {selectedId === 'guest' ? (
+                <>
+                  <label className="form-label" htmlFor="guest-weight">Seu peso</label>
+                  <div className="input-with-icon">
+                    <HeartPulse size={18} />
+                    <input
+                      id="guest-weight"
+                      type="number"
+                      min="1"
+                      max="500"
+                      step="0.1"
+                      inputMode="decimal"
+                      placeholder="Ex.: 70.5"
+                      value={guestWeight}
+                      onChange={(event) => setGuestWeight(event.target.value)}
+                    />
+                    <span>kg</span>
+                  </div>
+                  <p className="form-hint">Digite seu peso para calcular. Ele não será salvo nem compartilhado.</p>
+                </>
+              ) : (
+                <div className="weight-source">
+                  <span className="source-check"><Check size={14} /></span>
+                  <span><small>PESO MAIS RECENTE</small><strong>{currentWeight === null ? 'Ainda não registrado' : `${currentWeight.toFixed(1)} kg`}</strong></span>
+                  {currentWeight !== null && participant && <Link to={`/participante/${participant.id}`}>Ver dados</Link>}
+                </div>
+              )}
               <label className="form-label" htmlFor="height">Sua altura</label>
               <div className="input-with-icon">
                 <Ruler size={18} />
@@ -99,7 +136,7 @@ export default function BmiPage() {
         <section className="panel bmi-result-panel">
           <span className="section-kicker">SEU RESULTADO</span>
           {loading ? <Loading /> : currentWeight === null ? (
-            <div className="bmi-placeholder"><span className="bmi-placeholder-icon"><HeartPulse size={23} /></span><h2>Aguardando a primeira pesagem</h2><p>Assim que houver um peso registrado para {participant.name}, você poderá calcular seu IMC por aqui.</p></div>
+            <div className="bmi-placeholder"><span className="bmi-placeholder-icon"><HeartPulse size={23} /></span><h2>{selectedId === 'guest' ? 'Informe seu peso' : 'Aguardando a primeira pesagem'}</h2><p>{selectedId === 'guest' ? 'Digite seu peso e sua altura para calcular seu IMC.' : `Assim que houver um peso registrado para ${participant?.name}, você poderá calcular seu IMC por aqui.`}</p></div>
           ) : !height || !bmi ? (
             <div className="bmi-placeholder"><span className="bmi-placeholder-icon"><Ruler size={23} /></span><h2>Informe sua altura</h2><p>Com seu peso mais recente e sua altura, mostramos seu IMC e uma estimativa de referência.</p></div>
           ) : (
