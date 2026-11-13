@@ -73,6 +73,7 @@ export default function ProgressChart({ records, people = PEOPLE, selected }: Pr
       <svg
         className="progress-chart"
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        preserveAspectRatio="none"
         role="img"
         aria-label={
           selected

@@ -289,8 +289,13 @@ button { color: inherit; }
   .ranking-arrow { width: 14px; }
   .chart-legend { gap: 8px; }
   .chart-legend span { gap: 4px; font-size: 8px; }
-  .chart-panel { min-height: 220px; padding: 14px 8px 8px 1px; }
-  .chart-empty { min-height: 190px; }
+  .chart-panel { min-height: 0; padding: 8px 8px 4px 1px; }
+  .chart-wrap { line-height: 0; }
+  .progress-chart { height: 160px; }
+  .chart-axis { font-size: 14px; }
+  .chart-date { font-size: 12px; }
+  .chart-unit { font-size: 13px; }
+  .chart-empty { min-height: 145px; }
   .people-grid { grid-template-columns: 1fr; gap: 8px; }
   .person-link-card { padding: 11px 13px; }
   .bmi-banner { gap: 10px; margin-top: 26px; padding: 14px; }
