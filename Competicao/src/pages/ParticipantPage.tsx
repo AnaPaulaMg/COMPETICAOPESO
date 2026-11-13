@@ -53,19 +53,19 @@ export default function ParticipantPage() {
             <div className="panel stat-card">
               <span className="stat-icon"><Scale size={19} /></span>
               <span className="stat-label">Peso atual</span>
-              <strong>{latest ? `${latest[person.id].toFixed(1)} <small>kg</small>` : '—'}</strong>
+              <strong>{latest ? `${latest[person.id].toFixed(1)} kg` : '—'}</strong>
               <span className="stat-foot">{latest ? `Em ${formatDate(latest.week_date)}` : 'Aguardando pesagem'}</span>
             </div>
             <div className="panel stat-card">
               <span className="stat-icon stat-icon-green"><TrendingDown size={19} /></span>
               <span className="stat-label">Peso perdido</span>
-              <strong>{loss === null ? '—' : `${Math.abs(loss).toFixed(1)} <small>kg</small>`}</strong>
+              <strong>{loss === null ? '—' : `${Math.abs(loss).toFixed(1)} kg`}</strong>
               <span className="stat-foot">{first ? `Desde ${formatDate(first.week_date)}` : 'Aguardando pesagem'}</span>
             </div>
             <div className="panel stat-card">
               <span className="stat-icon stat-icon-green"><ArrowUpRight size={19} /></span>
               <span className="stat-label">Variação total</span>
-              <strong>{lossPercent === null ? '—' : `${Math.abs(lossPercent).toFixed(1)}<small>%</small>`}</strong>
+              <strong>{lossPercent === null ? '—' : `${Math.abs(lossPercent).toFixed(1)}%`}</strong>
               <span className="stat-foot">{loss === null ? 'Mais semanas para comparar' : loss > 0 ? 'de redução desde o início' : 'de variação desde o início'}</span>
             </div>
           </section>
